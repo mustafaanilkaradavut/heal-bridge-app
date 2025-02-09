@@ -68,45 +68,45 @@ export const getUser = async (userId: string) => {
 };
 
 // REGISTER PATIENT
-export const registerPatient = async ({
-   identificationDocument,
-   ...patient
-}: RegisterUserParams) => {
-   try {
-      let file;
-      if (identificationDocument) {
-         const filePath = `./temp/${identificationDocument.fileName}`;
-         const inputFile = fs.createWriteStream(filePath);
-         inputFile.write(
-            Buffer.from(await identificationDocument.blobFile.arrayBuffer())
-         );
+// export const registerPatient = async ({
+//    identificationDocument,
+//    ...patient
+// }: RegisterUserParams) => {
+//    try {
+//       let file;
+//       if (identificationDocument) {
+//          const filePath = `./temp/${identificationDocument.fileName}`;
+//          const inputFile = fs.createWriteStream(filePath);
+//          inputFile.write(
+//             Buffer.from(await identificationDocument.blobFile.arrayBuffer())
+//          );
 
-         file = await storage.createFile(
-            BUCKET_ID!,
-            ID.unique(),
-            fs.createReadStream(filePath)
-         );
-      }
+//          file = await storage.createFile(
+//             BUCKET_ID!,
+//             ID.unique(),
+//             fs.createReadStream(filePath)
+//          );
+//       }
 
-      const newPatient = await databases.createDocument(
-         DATABASE_ID!,
-         PATIENT_COLLECTION_ID!,
-         ID.unique(),
-         {
-            identificationDocumentId: file?.$id || null,
-            identificationDocumentUrl: file?.$id
-               ? `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file.$id}/view?project=${PROJECT_ID}`
-               : null,
-            ...patient,
-         }
-      );
+//       const newPatient = await databases.createDocument(
+//          DATABASE_ID!,
+//          PATIENT_COLLECTION_ID!,
+//          ID.unique(),
+//          {
+//             identificationDocumentId: file?.$id || null,
+//             identificationDocumentUrl: file?.$id
+//                ? `${ENDPOINT}/storage/buckets/${BUCKET_ID}/files/${file.$id}/view?project=${PROJECT_ID}`
+//                : null,
+//             ...patient,
+//          }
+//       );
 
-      return parseStringify(newPatient);
-   } catch (error) {
-      console.error('Error creating a new patient:', error);
-      throw error;
-   }
-};
+//       return parseStringify(newPatient);
+//    } catch (error) {
+//       console.error('Error creating a new patient:', error);
+//       throw error;
+//    }
+// };
 
 // GET PATIENT
 export const getPatient = async (userId: string) => {
