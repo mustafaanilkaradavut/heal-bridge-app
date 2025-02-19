@@ -1,6 +1,6 @@
 import { Models } from 'node-appwrite';
 
-export type Gender = 'Male' | 'Female' | 'Other';
+export type Gender = 'male' | 'female' | 'other';
 export type Status = 'pending' | 'scheduled' | 'cancelled';
 
 export interface Patient extends Models.Document {
