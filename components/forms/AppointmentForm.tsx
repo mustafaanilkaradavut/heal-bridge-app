@@ -64,7 +64,7 @@ export const AppointmentForm = ({
             status = 'scheduled';
             break;
          case 'cancel':
-            status = 'cancelled';
+            status = 'canceled';
             break;
          default:
             status = 'pending';
