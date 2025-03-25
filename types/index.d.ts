@@ -1,16 +1,16 @@
 /* eslint-disable no-unused-vars */
 
-// declare type SearchParamProps = {
-//    params: { [key: string]: string };
-//    searchParams: { [key: string]: string | string[] | undefined };
-// };
-
 declare type SearchParamProps = {
+   params: { [key: string]: string };
    searchParams: { [key: string]: string | string[] | undefined };
 };
 
-declare type Gender = 'Male' | 'Female' | 'Other';
-declare type Status = 'pending' | 'scheduled' | 'cancelled';
+// declare type SearchParamProps = {
+//    searchParams: { [key: string]: string | string[] | undefined };
+// };
+
+declare type Gender = 'male' | 'female' | 'other';
+declare type Status = 'pending' | 'scheduled' | 'canceled';
 
 declare interface CreateUserParams {
    name: string;

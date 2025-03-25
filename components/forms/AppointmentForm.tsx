@@ -64,7 +64,7 @@ export const AppointmentForm = ({
             status = 'scheduled';
             break;
          case 'cancel':
-            status = 'cancelled';
+            status = 'canceled';
             break;
          default:
             status = 'pending';
@@ -95,15 +95,10 @@ export const AppointmentForm = ({
                userId,
                appointmentId: appointment?.$id!,
                appointment: {
-                  appointmentId: appointment?.$id!,
                   primaryPhysician: values.primaryPhysician,
                   schedule: new Date(values.schedule),
                   status: status as Status,
-                  cancellationReason: values.cancellationReason!,
-                  reason: values.reason!,
-                  patient: appointment?.patient!,
-                  userId: appointment?.userId!,
-                  note: values.note || '',
+                  cancellationReason: values.cancellationReason,
                },
                type,
                timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
