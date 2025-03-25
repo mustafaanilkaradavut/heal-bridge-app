@@ -22,7 +22,11 @@ export const columns: ColumnDef<Appointment>[] = [
       header: 'Patient',
       cell: ({ row }) => {
          const appointment = row.original;
-         return <p className="text-14-medium ">{appointment.patient.name}</p>;
+         return (
+            <p className="text-14-medium ">
+               {appointment.patient?.name || 'Bilinmiyor'}
+            </p>
+         );
       },
    },
    {
@@ -61,14 +65,18 @@ export const columns: ColumnDef<Appointment>[] = [
 
          return (
             <div className="flex items-center gap-3">
-               <Image
-                  src={doctor?.image!}
-                  alt="doctor"
-                  width={100}
-                  height={100}
-                  className="size-8"
-               />
-               <p className="whitespace-nowrap">Dr. {doctor?.name}</p>
+               {doctor?.image && (
+                  <Image
+                     src={doctor.image}
+                     alt="doctor"
+                     width={100}
+                     height={100}
+                     className="size-8"
+                  />
+               )}
+               <p className="whitespace-nowrap">
+                  Dr. {doctor?.name || 'Bilinmiyor'}
+               </p>
             </div>
          );
       },
@@ -78,25 +86,30 @@ export const columns: ColumnDef<Appointment>[] = [
       header: () => <div className="pl-4">Actions</div>,
       cell: ({ row }) => {
          const appointment = row.original;
+         const patientId = appointment.patient?.$id;
 
          return (
             <div className="flex gap-1">
-               <AppointmentModal
-                  patientId={appointment.patient.$id}
-                  userId={appointment.userId}
-                  appointment={appointment}
-                  type="schedule"
-                  title="Schedule Appointment"
-                  description="Please confirm the following details to schedule."
-               />
-               <AppointmentModal
-                  patientId={appointment.patient.$id}
-                  userId={appointment.userId}
-                  appointment={appointment}
-                  type="cancel"
-                  title="Cancel Appointment"
-                  description="Are you sure you want to cancel your appointment?"
-               />
+               {patientId && (
+                  <AppointmentModal
+                     patientId={patientId}
+                     userId={appointment.userId}
+                     appointment={appointment}
+                     type="schedule"
+                     title="Schedule Appointment"
+                     description="Please confirm the following details to schedule."
+                  />
+               )}
+               {patientId && (
+                  <AppointmentModal
+                     patientId={patientId}
+                     userId={appointment.userId}
+                     appointment={appointment}
+                     type="cancel"
+                     title="Cancel Appointment"
+                     description="Are you sure you want to cancel your appointment?"
+                  />
+               )}
             </div>
          );
       },

@@ -67,7 +67,7 @@ export const getRecentAppointmentList = async () => {
       const initialCounts = {
          scheduledCount: 0,
          pendingCount: 0,
-         canceledCount: 0,
+         cancelledCount: 0,
       };
 
       const counts = (appointments.documents as Appointment[]).reduce(
@@ -80,7 +80,7 @@ export const getRecentAppointmentList = async () => {
                   acc.pendingCount++;
                   break;
                case 'canceled':
-                  acc.canceledCount++;
+                  acc.cancelledCount++;
                   break;
             }
             return acc;
@@ -120,13 +120,13 @@ export const sendSMSNotification = async (userId: string, content: string) => {
 };
 
 //  UPDATE APPOINTMENT
-export async function updateAppointment({
+export const updateAppointment = async ({
    appointmentId,
    userId,
    timeZone,
    appointment,
    type,
-}: UpdateAppointmentParams) {
+}: UpdateAppointmentParams) => {
    try {
       // Update appointment to scheduled -> https://appwrite.io/docs/references/cloud/server-nodejs/databases#updateDocument
       const updatedAppointment = await databases.updateDocument(
@@ -157,7 +157,7 @@ export async function updateAppointment({
          error
       );
    }
-}
+};
 
 // GET APPOINTMENT
 export const getAppointment = async (appointmentId: string) => {
